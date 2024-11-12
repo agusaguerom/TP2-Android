@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Tp2</string>
+    <string name="producto_titulo">Titulo: %1$s</string>
+    <string name="producto_precio">Precio: %1$.2f</string>
 </resources>
