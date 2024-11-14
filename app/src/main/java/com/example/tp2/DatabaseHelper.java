@@ -77,7 +77,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     public void insertProducts(String nombre, int precio, String descripcion, String fecha_salida, int stock, Consola consola){
-        SQLiteDatabase db = this.getWritableDatabase();
+        SQLiteDatabase db = getWritableDatabase();
         ContentValues valores = new ContentValues();
         valores.put("nombre", nombre);
         valores.put("precio", precio);
@@ -94,13 +94,50 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = getWritableDatabase();
         db.delete("producto", "id= " + idProducto, null);
         db.close();
-        Log.d("MainActivity", "Producto eliminado");
+        Log.d("DELETE PRODUCT", "Producto eliminado");
     }
 
     //Hacer funcion UpdateProductos
 
 
     //CRUD PARA LOS USUARIOS
+    public void insertUsuario(String nombre, String apellido, String email, String password){
+        SQLiteDatabase db = getWritableDatabase();
+        ContentValues valores = new ContentValues();
+        valores.put("nombre", nombre);
+        valores.put("apellido", apellido);
+        valores.put("email", email);
+        valores.put("password", password);
+
+        db.insert("usuario", null, valores);
+        db.close();
+    }
+
+    public void deleteUsuario(int idUsuario){
+        SQLiteDatabase db = getWritableDatabase();
+        db.delete("usuario", "id= " + idUsuario, null);
+        db.close();
+        Log.d("DELETE USUARIO", "USUARIO ELIMINADO");
+    }
+
+
+    //CRUD PARA LAS CONSOLAS
+    public void insertConsola(String nombre){
+        SQLiteDatabase db = getWritableDatabase();
+        ContentValues valores = new ContentValues();
+
+        valores.put("nombre", nombre);
+
+        db.insert("consola", null, valores);
+        db.close();
+    }
+
+    public void deleteConsola(int idConsola){
+        SQLiteDatabase db = getWritableDatabase();
+        db.delete("consola", "id= " + idConsola, null);
+        db.close();
+        Log.d("DELETE CONSOLA", "CONSOLA ELIMINADA");
+    }
 
 
 }
