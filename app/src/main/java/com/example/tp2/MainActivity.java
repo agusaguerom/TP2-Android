@@ -41,12 +41,9 @@ public class MainActivity extends AppCompatActivity {
         DatabaseHelper databaseHelper = new DatabaseHelper(this);
         databaseHelper.getWritableDatabase();
 
-        databaseHelper.insertProducts("Fallout 4", 25000, "Fallout 4 es un juego de rol de mundo abierto desarrollado por Bethesda Game Studios.", "10-11-2015", 10, ps4);
         LinkedList<Producto> products = databaseHelper.selectProducts();
 
-        databaseHelper.deleteUsuario(2);
-        databaseHelper.deleteConsola(5);
 
-        databaseHelper.deleteProduct(2);
+
     }
 }

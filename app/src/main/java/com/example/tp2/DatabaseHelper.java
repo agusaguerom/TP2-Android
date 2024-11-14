@@ -97,7 +97,20 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         Log.d("DELETE PRODUCT", "Producto eliminado");
     }
 
-    //Hacer funcion UpdateProductos
+    public void updateProduct(int idProducto, String nombre, int precio, String descripcion, String fecha_salida, int stock, Consola consola){
+        SQLiteDatabase db = getWritableDatabase();
+        ContentValues valores = new ContentValues();
+        valores.put("nombre", nombre);
+        valores.put("precio", precio);
+        valores.put("descripcion", descripcion);
+        valores.put("fecha_salida", fecha_salida);
+        valores.put("stock", stock);
+        valores.put("fk_consola", consola.getId());
+
+        db.update("producto", valores,"id = " + idProducto, null);
+        db.close();
+        Log.d("UPDATE PRODUCT","PRODUCTO ACTUALIZADO");
+    }
 
 
     //CRUD PARA LOS USUARIOS
@@ -120,6 +133,18 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         Log.d("DELETE USUARIO", "USUARIO ELIMINADO");
     }
 
+    public void updateUsuario(int idUsuario, String nombre, String apellido, String email, String password){
+        SQLiteDatabase db = getWritableDatabase();
+        ContentValues valores = new ContentValues();
+        valores.put("nombre", nombre);
+        valores.put("apellido", apellido);
+        valores.put("email", email);
+        valores.put("password", password);
+
+        db.update("usuario", valores, "id= "+ idUsuario, null);
+        db.close();
+        Log.d("UPDATE USUARIO", "updateUsuario: USUARIO ACTUALIZADO");
+    }
 
     //CRUD PARA LAS CONSOLAS
     public void insertConsola(String nombre){
@@ -137,6 +162,18 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.delete("consola", "id= " + idConsola, null);
         db.close();
         Log.d("DELETE CONSOLA", "CONSOLA ELIMINADA");
+    }
+
+    public void updateConsola(int idConsola , String nombre){
+        SQLiteDatabase db = getWritableDatabase();
+        ContentValues valores = new ContentValues();
+
+        valores.put("nombre", nombre);
+
+        db.update("consola", valores, "id= " +  idConsola, null);
+        db.close();
+        Log.d("UPDATE CONSOLA", "CONSOLA ACTUALIZADA");
+
     }
 
 
