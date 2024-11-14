@@ -2,6 +2,8 @@ package com.example.tp2;
 
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.util.Log;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -12,8 +14,13 @@ import androidx.core.view.WindowInsetsCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.tp2.model.Consola;
+import com.example.tp2.model.Producto;
+
+import java.util.LinkedList;
+
 public class MainActivity extends AppCompatActivity {
-    RecyclerView recyclerView;
+    TextView textView, secondText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,15 +33,17 @@ public class MainActivity extends AppCompatActivity {
             return insets;
         });
 
+        Consola ps4 = new Consola(1, "PS4");
 
-        recyclerView = findViewById(R.id.recyclerview);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-
+        textView = findViewById(R.id.textView);
+        secondText = findViewById(R.id.secondText);
 
         DatabaseHelper databaseHelper = new DatabaseHelper(this);
         databaseHelper.getWritableDatabase();
-        databaseHelper.selectProducts();
 
+        databaseHelper.insertProducts("Fallout 4", 25000, "Fallout 4 es un juego de rol de mundo abierto desarrollado por Bethesda Game Studios.", "10-11-2015", 10, ps4);
+        LinkedList<Producto> products = databaseHelper.selectProducts();
 
+        databaseHelper.deleteProduct(2);
     }
 }

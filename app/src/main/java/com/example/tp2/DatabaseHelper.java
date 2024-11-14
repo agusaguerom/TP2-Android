@@ -9,6 +9,7 @@ import android.util.Log;
 
 import androidx.annotation.Nullable;
 
+import com.example.tp2.model.Consola;
 import com.example.tp2.model.Producto;
 
 import java.util.LinkedList;
@@ -49,16 +50,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    public void insertData(){
-        SQLiteDatabase db = this.getWritableDatabase();
-        ContentValues valores = new ContentValues();
-        valores.put("nombre", "Jose");
-        valores.put("email", "jose@gmail.com");
 
-        db.insert("usuario", null, valores);
-        db.close();
-    }
-
+    //CRUD PARA LOS PRODUCTOSS
     public LinkedList<Producto> selectProducts(){
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery("SELECT * from producto", null);
@@ -66,12 +59,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         if(cursor.moveToFirst()){
             do{
-                int id  = cursor.getInt(0);
-                String nombre = cursor.getString(1);
-                int precio  = cursor.getInt(2);
-                String descripcion = cursor.getString(3);
-                String fecha_salida = cursor.getString(4);
-                int stock = cursor.getInt(5);
+                int id  = cursor.getInt(cursor.getColumnIndexOrThrow("id"));
+                String nombre = cursor.getString(cursor.getColumnIndexOrThrow("nombre"));
+                int precio  = cursor.getInt(cursor.getColumnIndexOrThrow("precio"));
+                String descripcion = cursor.getString(cursor.getColumnIndexOrThrow("descripcion"));
+                String fecha_salida = cursor.getString(cursor.getColumnIndexOrThrow("fecha_salida"));
+                int stock = cursor.getInt(cursor.getColumnIndexOrThrow("stock"));
 
                 Producto producto = new Producto(id,nombre,precio,descripcion,fecha_salida,"2020",stock);
                 productosList.add(producto);
@@ -82,6 +75,32 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         return productosList;
     }
+
+    public void insertProducts(String nombre, int precio, String descripcion, String fecha_salida, int stock, Consola consola){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues valores = new ContentValues();
+        valores.put("nombre", nombre);
+        valores.put("precio", precio);
+        valores.put("descripcion", descripcion);
+        valores.put("fecha_salida", fecha_salida);
+        valores.put("stock", stock);
+        valores.put("fk_consola", consola.getId());
+
+        db.insert("producto", null, valores);
+        db.close();
+    }
+
+    public void deleteProduct(int idProducto){
+        SQLiteDatabase db = getWritableDatabase();
+        db.delete("producto", "id= " + idProducto, null);
+        db.close();
+        Log.d("MainActivity", "Producto eliminado");
+    }
+
+    //Hacer funcion UpdateProductos
+
+
+    //CRUD PARA LOS USUARIOS
 
 
 }

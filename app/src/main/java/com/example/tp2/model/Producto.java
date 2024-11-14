@@ -30,6 +30,9 @@ public class Producto {
         this.fecha_publicacion = fecha_publicacion;
         this.stock = stock;
     }
+    public Producto(){
+
+    }
 
     public int getId() {
         return id;

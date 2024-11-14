@@ -15,6 +15,10 @@ public class Usuario {
         this.password = password;
     }
 
+    public Usuario(){
+
+    }
+
     public int getId() {
         return id;
     }

@@ -10,6 +10,10 @@ public class Consola {
         this.nombre = nombre;
     }
 
+    public Consola(){
+
+    }
+
     public int getId() {
         return id;
     }
