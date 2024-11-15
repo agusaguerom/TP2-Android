@@ -1,26 +1,28 @@
 package com.example.tp2;
 
-import android.database.sqlite.SQLiteDatabase;
+import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
+
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.tp2.model.Consola;
-import com.example.tp2.model.Producto;
+
+import com.example.tp2.model.Usuario;
 
 import java.util.LinkedList;
 
 public class MainActivity extends AppCompatActivity {
-    TextView textView, secondText;
+    Button buttonLogin;
+    EditText inputEmail, inputPassword;
+    TextView errorLogin;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,16 +34,33 @@ public class MainActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+        inputEmail = findViewById(R.id.inputEmail);
+        inputPassword = findViewById(R.id.inputPassword);
+        buttonLogin = findViewById(R.id.login);
+        errorLogin = findViewById(R.id.errorInputs);
 
-        Consola ps4 = new Consola(1, "PS4");
 
-        textView = findViewById(R.id.textView);
-        secondText = findViewById(R.id.secondText);
+        DatabaseHelper db = new DatabaseHelper(this);
 
-        DatabaseHelper databaseHelper = new DatabaseHelper(this);
-        databaseHelper.getWritableDatabase();
+        LinkedList<Usuario>usuarios = db.selectUsuarios();
 
-        LinkedList<Producto> products = databaseHelper.selectProducts();
+
+
+        buttonLogin.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                for(Usuario usuario : usuarios){
+                    if (usuario.getEmail().equals(inputEmail.getText().toString()) && usuario.getPassword().equals(inputPassword.getText().toString())){
+                        Intent i = new Intent(MainActivity.this, Inicio.class);
+                        startActivity(i);
+                    }else{
+                        errorLogin.setVisibility(View.VISIBLE);
+                    }
+                }
+
+            }
+        });
 
 
 

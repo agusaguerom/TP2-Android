@@ -11,6 +11,7 @@ import androidx.annotation.Nullable;
 
 import com.example.tp2.model.Consola;
 import com.example.tp2.model.Producto;
+import com.example.tp2.model.Usuario;
 
 import java.util.LinkedList;
 
@@ -114,6 +115,30 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
 
     //CRUD PARA LOS USUARIOS
+
+    public LinkedList<Usuario> selectUsuarios(){
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT * from usuario", null);
+        LinkedList<Usuario> usuarioList = new LinkedList<>();
+
+        if(cursor.moveToFirst()){
+            do{
+                int id  = cursor.getInt(cursor.getColumnIndexOrThrow("id"));
+                String nombre = cursor.getString(cursor.getColumnIndexOrThrow("nombre"));
+                String apellido  = cursor.getString(cursor.getColumnIndexOrThrow("apellido"));
+                String email = cursor.getString(cursor.getColumnIndexOrThrow("email"));
+                String password = cursor.getString(cursor.getColumnIndexOrThrow("password"));
+
+                Usuario usuario = new Usuario(id,nombre,apellido,email,password);
+                usuarioList.add(usuario);
+            }while(cursor.moveToNext());
+        }
+        cursor.close();
+        db.close();
+
+        return usuarioList;
+    }
+
     public void insertUsuario(String nombre, String apellido, String email, String password){
         SQLiteDatabase db = getWritableDatabase();
         ContentValues valores = new ContentValues();
