@@ -3,15 +3,24 @@ package com.example.tp2.Fragments;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.tp2.DatabaseHelper;
+import com.example.tp2.ProductAdapter;
 import com.example.tp2.R;
+import com.example.tp2.model.Producto;
+
+import java.util.LinkedList;
 
 public class ProductsFragment extends Fragment {
-
+    RecyclerView recyclerView;
+    private ProductAdapter adapter;
+    private DatabaseHelper db;
 
 
     public ProductsFragment() {
@@ -36,6 +45,18 @@ public class ProductsFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_products, container, false);
+
+        db = new DatabaseHelper(this.getContext());
+        LinkedList<Producto> listaProducts = db.selectProducts();
+
+        View view = inflater.inflate(R.layout.fragment_products, container, false);
+
+        recyclerView = view.findViewById(R.id.recyclerView);
+        recyclerView.setLayoutManager(new GridLayoutManager(this.getContext(), 2));
+        adapter = new ProductAdapter(this.getContext());
+        adapter.setProductList(listaProducts);
+        recyclerView.setAdapter(adapter);
+
+        return view;
     }
 }
