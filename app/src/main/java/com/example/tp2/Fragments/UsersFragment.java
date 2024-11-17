@@ -3,13 +3,20 @@ package com.example.tp2.Fragments;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.tp2.Adapters.UsersAdapter;
+import com.example.tp2.DatabaseHelper;
 import com.example.tp2.R;
+import com.example.tp2.model.Usuario;
+
+import java.util.LinkedList;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -17,6 +24,9 @@ import com.example.tp2.R;
  * create an instance of this fragment.
  */
 public class UsersFragment extends Fragment {
+    RecyclerView recyclerView;
+    private DatabaseHelper db;
+    private UsersAdapter adapter;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -44,8 +54,6 @@ public class UsersFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
         }
     }
 
@@ -53,7 +61,16 @@ public class UsersFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        return inflater.inflate(R.layout.fragment_users, container, false);
+        db = new DatabaseHelper(this.getContext());
+        LinkedList<Usuario> listaUsers = db.selectUsuarios();
 
+        View view =  inflater.inflate(R.layout.fragment_users, container, false);
+
+        recyclerView = view.findViewById(R.id.recyclerViewUsers);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this.getContext()));
+        adapter = new UsersAdapter(this.getContext());
+        adapter.setUserList(listaUsers);
+        recyclerView.setAdapter(adapter);
+        return view;
     }
 }

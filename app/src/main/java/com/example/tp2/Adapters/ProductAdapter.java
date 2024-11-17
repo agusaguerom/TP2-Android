@@ -1,15 +1,14 @@
-package com.example.tp2;
+package com.example.tp2.Adapters;
 
 import android.content.Context;
-import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.tp2.R;
 import com.example.tp2.model.Producto;
 
 import org.jetbrains.annotations.NotNull;
@@ -37,6 +36,9 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductsViewHolder> {
     public void onBindViewHolder(@NonNull ProductsViewHolder holder, int position) {
         Producto producto = productList.get(position);
         holder.nombreView.setText(producto.getNombre());
+        holder.precioView.setText(producto.getPrecio());
+        int id_imagen = holder.itemView.getContext().getResources().getIdentifier(producto.getUrl_imagen(), "drawable", holder.itemView.getContext().getPackageName());
+        holder.imageView.setImageResource(id_imagen);
     }
 
     @Override

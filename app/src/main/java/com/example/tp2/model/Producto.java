@@ -1,17 +1,23 @@
 package com.example.tp2.model;
 
+
+import android.net.Uri;
+
+import java.util.Date;
+
 public class Producto {
 
     private int id;
     private String nombre;
     private int precio;
     private String descripcion;
-    private String fecha_salida;
-    private String fecha_publicacion;
+    private Date fecha_salida;
+    private Date fecha_publicacion;
     private int stock;
+    private String url_imagen;
     private Consola consola;
 
-    public Producto(int id, String nombre, int precio, String descripcion, String fecha_salida, String fecha_publicacion, int stock, Consola consola) {
+    public Producto(int id, String nombre, int precio, String descripcion, Date fecha_salida, Date fecha_publicacion, int stock,String url_imagen, Consola consola) {
         this.id = id;
         this.nombre = nombre;
         this.precio = precio;
@@ -19,9 +25,10 @@ public class Producto {
         this.fecha_salida = fecha_salida;
         this.fecha_publicacion = fecha_publicacion;
         this.stock = stock;
+        this.url_imagen = url_imagen;
         this.consola = consola;
     }
-    public Producto(int id, String nombre, int precio, String descripcion, String fecha_salida, String fecha_publicacion, int stock) {
+    public Producto(int id, String nombre, int precio, String descripcion, Date fecha_salida, Date fecha_publicacion, int stock, String url_imagen) {
         this.id = id;
         this.nombre = nombre;
         this.precio = precio;
@@ -29,9 +36,18 @@ public class Producto {
         this.fecha_salida = fecha_salida;
         this.fecha_publicacion = fecha_publicacion;
         this.stock = stock;
+        this.url_imagen = url_imagen;
     }
     public Producto(){
 
+    }
+
+    public String getUrl_imagen() {
+        return url_imagen;
+    }
+
+    public void setUrl_imagen(String url_imagen) {
+        this.url_imagen = url_imagen;
     }
 
     public int getId() {
@@ -66,19 +82,19 @@ public class Producto {
         this.descripcion = descripcion;
     }
 
-    public String getFecha_salida() {
+    public Date getFecha_salida() {
         return fecha_salida;
     }
 
-    public void setFecha_salida(String fecha_salida) {
+    public void setFecha_salida(Date fecha_salida) {
         this.fecha_salida = fecha_salida;
     }
 
-    public String getFecha_publicacion() {
+    public Date getFecha_publicacion() {
         return fecha_publicacion;
     }
 
-    public void setFecha_publicacion(String fecha_publicacion) {
+    public void setFecha_publicacion(Date fecha_publicacion) {
         this.fecha_publicacion = fecha_publicacion;
     }
 

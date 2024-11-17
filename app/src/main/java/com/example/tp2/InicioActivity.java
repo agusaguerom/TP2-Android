@@ -18,7 +18,7 @@ import com.example.tp2.Fragments.UsersFragment;
 import com.example.tp2.model.Consola;
 import com.google.android.material.tabs.TabLayout;
 
-public class Inicio extends AppCompatActivity {
+public class InicioActivity extends AppCompatActivity {
     TextView textView, secondText;
     TabLayout tablayout;
 

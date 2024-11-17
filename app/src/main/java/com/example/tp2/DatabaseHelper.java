@@ -13,7 +13,11 @@ import com.example.tp2.model.Consola;
 import com.example.tp2.model.Producto;
 import com.example.tp2.model.Usuario;
 
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.util.Date;
 import java.util.LinkedList;
+import java.util.Locale;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String DATABASE_NAME = "tienda.db";
@@ -35,14 +39,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL("INSERT INTO consola (nombre) VALUES ('Xbox')");
         db.execSQL("INSERT INTO consola (nombre) VALUES ('Nintendo Switch')");
 
-        db.execSQL("CREATE TABLE producto (id INTEGER PRIMARY KEY AUTOINCREMENT, nombre TEXT, precio TEXT, descripcion TEXT, fecha_salida TEXT, fecha_publicacion TIMESTAMP DEFAULT CURRENT_TIMESTAMP, stock INT, fk_consola, FOREIGN KEY(fk_consola) REFERENCES consola(id))");
-        db.execSQL("INSERT INTO producto (nombre, precio, descripcion, fecha_salida, stock, fk_consola) VALUES ('The Last of Us Part II', '60000', 'Una épica historia de supervivencia y venganza desarrollada por Naughty Dog.', '19-06-2020', 30, 2)");
+        db.execSQL("CREATE TABLE producto (id INTEGER PRIMARY KEY AUTOINCREMENT, nombre TEXT, precio TEXT, descripcion TEXT, fecha_salida TEXT, fecha_publicacion DATE DEFAULT (CURRENT_DATE), stock INT,url_imagen TEXT, fk_consola, FOREIGN KEY(fk_consola) REFERENCES consola(id))");
+        db.execSQL("INSERT INTO producto (nombre, precio, descripcion, fecha_salida, stock, url_imagen, fk_consola) VALUES ('The Last of Us Part II', '60000', 'Una épica historia de supervivencia y venganza desarrollada por Naughty Dog.', '19-06-2020', 30,'tlou2', 2)");
 
-        db.execSQL("INSERT INTO producto (nombre, precio, descripcion, fecha_salida, stock, fk_consola) VALUES ('Ghost of Tsushima', '40000', 'Explora el Japón feudal y vive una historia de samuráis en un mundo abierto.', '17-07-2020', 25, 1)");
+        db.execSQL("INSERT INTO producto (nombre, precio, descripcion, fecha_salida, stock, url_imagen, fk_consola) VALUES ('Ghost of Tsushima', '40000', 'Explora el Japón feudal y vive una historia de samuráis en un mundo abierto.', '17-07-2020', 25,'got', 1)");
 
-        db.execSQL("INSERT INTO producto (nombre, precio, descripcion, fecha_salida, stock, fk_consola) VALUES ('Red Dead Redemption 2', '35000', 'Un vasto y detallado mundo abierto ambientado en el Salvaje Oeste.', '26-10-2-18', 40, 1)");
+        db.execSQL("INSERT INTO producto (nombre, precio, descripcion, fecha_salida, stock, url_imagen, fk_consola) VALUES ('Red Dead Redemption 2', '35000', 'Un vasto y detallado mundo abierto ambientado en el Salvaje Oeste.', '26-10-2-18', 40,'rdr2', 1)");
 
-        db.execSQL("INSERT INTO producto (nombre, precio, descripcion, fecha_salida, stock, fk_consola) VALUES ('The Legend of Zelda: Breath of the Wild', '55000', 'Una aventura épica en el reino de Hyrule con un enfoque en la exploración y la libertad.', '03-03-2017', 20, 3)");
+        db.execSQL("INSERT INTO producto (nombre, precio, descripcion, fecha_salida, stock, url_imagen, fk_consola) VALUES ('The Legend of Zelda: Breath of the Wild', '55000', 'Una aventura épica en el reino de Hyrule con un enfoque en la exploración y la libertad.', '03-03-2017', 20, 'zelda_botw', 3)");
     }
 
     @Override
@@ -52,11 +56,15 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
 
-    //CRUD PARA LOS PRODUCTOSS
+    //CRUD PARA LOS PRODUCTOS
     public LinkedList<Producto> selectProducts(){
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery("SELECT * from producto", null);
         LinkedList<Producto> productosList = new LinkedList<>();
+        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
+        SimpleDateFormat formatoBD = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+        Date fecha_salida = null;
+        Date fecha_publicacion = null;
 
         if(cursor.moveToFirst()){
             do{
@@ -64,10 +72,21 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 String nombre = cursor.getString(cursor.getColumnIndexOrThrow("nombre"));
                 int precio  = cursor.getInt(cursor.getColumnIndexOrThrow("precio"));
                 String descripcion = cursor.getString(cursor.getColumnIndexOrThrow("descripcion"));
-                String fecha_salida = cursor.getString(cursor.getColumnIndexOrThrow("fecha_salida"));
-                int stock = cursor.getInt(cursor.getColumnIndexOrThrow("stock"));
 
-                Producto producto = new Producto(id,nombre,precio,descripcion,fecha_salida,"2020",stock);
+                try{
+                    fecha_salida = sdf.parse(cursor.getString(cursor.getColumnIndexOrThrow("fecha_salida")));
+                    Date fecha_publicacionDB = formatoBD.parse(cursor.getString(cursor.getColumnIndexOrThrow("fecha_publicacion")));
+                    String fecha_publicacionNuevoFormato = sdf.format(fecha_publicacionDB);
+                    fecha_publicacion = sdf.parse(fecha_publicacionNuevoFormato);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                String url_imagen = cursor.getString(cursor.getColumnIndexOrThrow("url_imagen"));
+                int stock = cursor.getInt(cursor.getColumnIndexOrThrow("stock"));
+                int consolaid = cursor.getInt(cursor.getColumnIndexOrThrow("fk_consola"));
+                Consola consola = getConsolaById(consolaid);
+
+                Producto producto = new Producto(id,nombre,precio,descripcion,fecha_salida,fecha_publicacion,stock, url_imagen, consola);
                 productosList.add(producto);
             }while(cursor.moveToNext());
         }
@@ -172,6 +191,25 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     //CRUD PARA LAS CONSOLAS
+    public LinkedList<Consola> selectConsola(){
+        SQLiteDatabase db = getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT * FROM consola" , null);
+        LinkedList<Consola> listaconsolas = new LinkedList<>();
+
+        if (cursor.moveToFirst()){
+            do {
+                int id = cursor.getInt(cursor.getColumnIndexOrThrow("id"));
+                String nombre = cursor.getString(cursor.getColumnIndexOrThrow("nombre"));
+
+                Consola consola = new Consola(id,nombre);
+                listaconsolas.add(consola);
+            }while(cursor.moveToNext());
+        }
+        cursor.close();
+        db.close();
+        return listaconsolas;
+    }
+
     public void insertConsola(String nombre){
         SQLiteDatabase db = getWritableDatabase();
         ContentValues valores = new ContentValues();
@@ -200,6 +238,18 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         Log.d("UPDATE CONSOLA", "CONSOLA ACTUALIZADA");
 
     }
+
+    public Consola getConsolaById(int id){
+        LinkedList<Consola> consolas = selectConsola();
+
+        for (Consola consola : consolas){
+            if(consola.getId() == id){
+                return consola;
+            }
+        }
+        return null;
+    }
+
 
 
 }
