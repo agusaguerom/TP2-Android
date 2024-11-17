@@ -1,5 +1,6 @@
 package com.example.tp2.Fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -10,10 +11,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.tp2.DatabaseHelper;
+import com.example.tp2.InsertProductActivity;
+import com.example.tp2.db.DatabaseHelper;
 import com.example.tp2.Adapters.ProductAdapter;
 import com.example.tp2.R;
 import com.example.tp2.model.Producto;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.LinkedList;
 
@@ -21,6 +24,7 @@ public class ProductsFragment extends Fragment {
     RecyclerView recyclerView;
     private ProductAdapter adapter;
     private DatabaseHelper db;
+    FloatingActionButton btnAgregarProducto;
 
 
     public ProductsFragment() {
@@ -58,6 +62,17 @@ public class ProductsFragment extends Fragment {
         adapter.setProductList(listaProducts);
         recyclerView.setAdapter(adapter);
 
+        btnAgregarProducto = view.findViewById(R.id.btnAgregarProducto);
+
+        btnAgregarProducto.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(getContext(), InsertProductActivity.class);
+                startActivity(i);
+            }
+        });
+
         return view;
     }
+
 }

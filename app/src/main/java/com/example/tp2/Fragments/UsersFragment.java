@@ -3,7 +3,6 @@ package com.example.tp2.Fragments;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -12,7 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.tp2.Adapters.UsersAdapter;
-import com.example.tp2.DatabaseHelper;
+import com.example.tp2.db.DatabaseHelper;
 import com.example.tp2.R;
 import com.example.tp2.model.Usuario;
 

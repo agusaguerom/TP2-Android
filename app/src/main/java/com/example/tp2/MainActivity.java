@@ -15,6 +15,7 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 
+import com.example.tp2.db.DatabaseHelper;
 import com.example.tp2.model.Usuario;
 
 import java.util.LinkedList;

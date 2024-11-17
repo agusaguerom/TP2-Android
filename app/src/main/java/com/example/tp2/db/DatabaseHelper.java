@@ -1,4 +1,4 @@
-package com.example.tp2;
+package com.example.tp2.db;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -7,14 +7,11 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
-import androidx.annotation.Nullable;
-
 import com.example.tp2.model.Consola;
 import com.example.tp2.model.Producto;
 import com.example.tp2.model.Usuario;
 
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.Locale;
@@ -39,7 +36,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL("INSERT INTO consola (nombre) VALUES ('Xbox')");
         db.execSQL("INSERT INTO consola (nombre) VALUES ('Nintendo Switch')");
 
-        db.execSQL("CREATE TABLE producto (id INTEGER PRIMARY KEY AUTOINCREMENT, nombre TEXT, precio TEXT, descripcion TEXT, fecha_salida TEXT, fecha_publicacion DATE DEFAULT (CURRENT_DATE), stock INT,url_imagen TEXT, fk_consola, FOREIGN KEY(fk_consola) REFERENCES consola(id))");
+        db.execSQL("CREATE TABLE producto (id INTEGER PRIMARY KEY AUTOINCREMENT, nombre TEXT, precio INT, descripcion TEXT, fecha_salida TEXT, fecha_publicacion DATE DEFAULT (CURRENT_DATE), stock INT,url_imagen TEXT, fk_consola, FOREIGN KEY(fk_consola) REFERENCES consola(id))");
         db.execSQL("INSERT INTO producto (nombre, precio, descripcion, fecha_salida, stock, url_imagen, fk_consola) VALUES ('The Last of Us Part II', '60000', 'Una épica historia de supervivencia y venganza desarrollada por Naughty Dog.', '19-06-2020', 30,'tlou2', 2)");
 
         db.execSQL("INSERT INTO producto (nombre, precio, descripcion, fecha_salida, stock, url_imagen, fk_consola) VALUES ('Ghost of Tsushima', '40000', 'Explora el Japón feudal y vive una historia de samuráis en un mundo abierto.', '17-07-2020', 25,'got', 1)");
@@ -96,13 +93,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return productosList;
     }
 
-    public void insertProducts(String nombre, int precio, String descripcion, String fecha_salida, int stock, Consola consola){
+    public void insertProducts(String nombre, int precio, String descripcion, Date fecha_salida, int stock,String img_url, Consola consola){
         SQLiteDatabase db = getWritableDatabase();
         ContentValues valores = new ContentValues();
         valores.put("nombre", nombre);
         valores.put("precio", precio);
         valores.put("descripcion", descripcion);
-        valores.put("fecha_salida", fecha_salida);
+        valores.put("fecha_salida", fecha_salida.toString());
+        valores.put("url_imagen", img_url);
         valores.put("stock", stock);
         valores.put("fk_consola", consola.getId());
 

@@ -3,6 +3,7 @@ package com.example.tp2;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -15,7 +16,9 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.example.tp2.Fragments.ProductsFragment;
 import com.example.tp2.Fragments.UsersFragment;
+import com.example.tp2.db.DatabaseHelper;
 import com.example.tp2.model.Consola;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
 
 public class InicioActivity extends AppCompatActivity {
@@ -32,6 +35,15 @@ public class InicioActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+
+        String insercioncorrecta = getIntent().getStringExtra("mensajeproductoinsertado");
+        String productoeliminado = getIntent().getStringExtra("mensajeproductoeliminado");
+        if (insercioncorrecta != null){
+            Toast.makeText(this, insercioncorrecta, Toast.LENGTH_SHORT).show();
+        }else if(productoeliminado != null){
+            Toast.makeText(this, productoeliminado, Toast.LENGTH_SHORT).show();
+
+        }
 
         if (savedInstanceState == null) {
             Fragment fragmentSeleccionado = new ProductsFragment();
