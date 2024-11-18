@@ -3,18 +3,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Fragments.UsersFragment"
-    android:id="@+id/fragmentusers">
-
-
+    tools:context=".Fragments.ConsolaFragment"
+    android:id="@+id/fragmentconsola">
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerViewUsers"
+        android:id="@+id/recyclerViewConsolas"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/btnAgregarUsuario"
+        android:id="@+id/btnAgregarConsola"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="end|bottom"
@@ -22,6 +20,5 @@
         android:layout_marginBottom="16dp"
         android:clickable="true"
         android:src="@android:drawable/ic_menu_add" />
-
 
 </FrameLayout>

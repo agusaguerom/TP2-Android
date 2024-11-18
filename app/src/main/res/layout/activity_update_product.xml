@@ -89,10 +89,10 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/btnAgregarProducto"
+        android:id="@+id/btnActualizarProducto"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Agregar Producto"
+        android:text="Actualizar Producto"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

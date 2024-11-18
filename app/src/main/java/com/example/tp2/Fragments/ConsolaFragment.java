@@ -10,13 +10,14 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 
+import com.example.tp2.Adapters.ConsolasAdapter;
 import com.example.tp2.Adapters.UsersAdapter;
+import com.example.tp2.InsertConsolaActivity;
 import com.example.tp2.InsertProductActivity;
-import com.example.tp2.InsertUserActivity;
-import com.example.tp2.db.DatabaseHelper;
 import com.example.tp2.R;
+import com.example.tp2.db.DatabaseHelper;
+import com.example.tp2.model.Consola;
 import com.example.tp2.model.Usuario;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -24,33 +25,22 @@ import java.util.LinkedList;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link UsersFragment#newInstance} factory method to
+ * Use the {@link ConsolaFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class UsersFragment extends Fragment {
+public class ConsolaFragment extends Fragment {
     RecyclerView recyclerView;
     private DatabaseHelper db;
-    private UsersAdapter adapter;
-    FloatingActionButton btnAgregarUsuario;
+    private ConsolasAdapter adapter;
+    FloatingActionButton btnAgregarConsola;
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
-    public UsersFragment() {
-        // Required empty public constructor
+    public ConsolaFragment() {
     }
 
-    public static UsersFragment newInstance(String param1, String param2) {
-        UsersFragment fragment = new UsersFragment();
+    public static ConsolaFragment newInstance(String param1, String param2) {
+        ConsolaFragment fragment = new ConsolaFragment();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
+
         fragment.setArguments(args);
         return fragment;
     }
@@ -65,26 +55,24 @@ public class UsersFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
         db = new DatabaseHelper(this.getContext());
-        LinkedList<Usuario> listaUsers = db.selectUsuarios();
+        LinkedList<Consola> listaConsola = db.selectConsola();
 
-        View view =  inflater.inflate(R.layout.fragment_users, container, false);
+        View view =  inflater.inflate(R.layout.fragment_consola, container, false);
 
-        recyclerView = view.findViewById(R.id.recyclerViewUsers);
+        recyclerView = view.findViewById(R.id.recyclerViewConsolas);
         recyclerView.setLayoutManager(new LinearLayoutManager(this.getContext()));
-        adapter = new UsersAdapter(this.getContext());
-        adapter.setUserList(listaUsers);
+        adapter = new ConsolasAdapter(this.getContext());
+        adapter.setConsolaList(listaConsola);
         recyclerView.setAdapter(adapter);
 
+        btnAgregarConsola = view.findViewById(R.id.btnAgregarConsola);
 
 
-        btnAgregarUsuario = view.findViewById(R.id.btnAgregarUsuario);
-
-        btnAgregarUsuario.setOnClickListener(new View.OnClickListener() {
+        btnAgregarConsola.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(getContext(), InsertUserActivity.class);
+                Intent i = new Intent(getContext(), InsertConsolaActivity.class);
                 startActivity(i);
             }
         });

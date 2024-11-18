@@ -1,6 +1,7 @@
 package com.example.tp2;
 
 import android.content.Intent;
+import android.graphics.DashPathEffect;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -17,6 +18,7 @@ import androidx.core.view.WindowInsetsCompat;
 
 import com.example.tp2.db.DatabaseHelper;
 import com.example.tp2.model.Consola;
+import com.example.tp2.model.Producto;
 import com.google.android.material.textfield.TextInputEditText;
 
 import java.text.ParseException;
@@ -26,16 +28,19 @@ import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
-public class InsertProductActivity extends AppCompatActivity {
-    EditText inputNombreProduct, inputPrecioProduct, inputFechaSalidaProduct, InputStockProducts;
-    TextInputEditText inputDescripcionProduct;
-    Button btnAgregarProducto;
-    ImageView volver;
+public class UpdateProductActivity extends AppCompatActivity {
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        EditText inputNombreProduct, inputPrecioProduct, inputFechaSalidaProduct, InputStockProducts;
+        TextInputEditText inputDescripcionProduct;
+        Button btnActualizarProducto;
+        ImageView volver;
+
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_insert_product);
+        setContentView(R.layout.activity_update_product);
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
@@ -43,6 +48,8 @@ public class InsertProductActivity extends AppCompatActivity {
         });
 
         DatabaseHelper db = new DatabaseHelper(this);
+        int id = getIntent().getIntExtra("id", 0);
+        Producto producto = db.getProductById(id);
 
         inputNombreProduct = findViewById(R.id.inputNombreProduct);
         inputPrecioProduct = findViewById(R.id.inputPrecioProduct);
@@ -50,16 +57,17 @@ public class InsertProductActivity extends AppCompatActivity {
         InputStockProducts = findViewById(R.id.InputStockProducts);
         Spinner spinnerConsolas = findViewById(R.id.spinner1);
         inputDescripcionProduct = findViewById(R.id.InputDescripcionProduct);
-        btnAgregarProducto = findViewById(R.id.btnAgregarProducto);
+        btnActualizarProducto = findViewById(R.id.btnActualizarProducto);
         volver = findViewById(R.id.volver);
 
-        volver.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(InsertProductActivity.this, InicioActivity.class);
-                startActivity(i);
-            }
-        });
+        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+        String fechaSalidaStr = sdf.format(producto.getFecha_salida());
+
+        inputNombreProduct.setText(producto.getNombre());
+        inputPrecioProduct.setText(String.valueOf(producto.getPrecio()));
+        inputFechaSalidaProduct.setText(fechaSalidaStr);
+        InputStockProducts.setText(String.valueOf(producto.getStock()));
+        inputDescripcionProduct.setText(producto.getDescripcion());
 
         LinkedList<Consola> listaConsolas = db.selectConsola();
 
@@ -71,14 +79,17 @@ public class InsertProductActivity extends AppCompatActivity {
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerConsolas.setAdapter(adapter);
 
-
-
-
-
-        btnAgregarProducto.setOnClickListener(new View.OnClickListener() {
+        volver.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Intent i = new Intent(UpdateProductActivity.this, InicioActivity.class);
+                startActivity(i);
+            }
+        });
 
+        btnActualizarProducto.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
                 if (!isFechaValida(inputFechaSalidaProduct.getText().toString())) {
                     inputFechaSalidaProduct.setError("La fecha debe tener el formato dd-MM-yyyy");
                     return;
@@ -102,15 +113,13 @@ public class InsertProductActivity extends AppCompatActivity {
                 String imagen = "notimagefound";
                 Date finalFecha_salida = fecha_salida;
 
-                db.insertProducts(nombre,precio,descripcion, finalFecha_salida,stock,imagen, consolaSeleccionada);
+                db.updateProduct(producto.getId(), nombre,precio,descripcion, finalFecha_salida,stock,imagen,consolaSeleccionada);
 
-                Intent i = new Intent(InsertProductActivity.this, InicioActivity.class);
-                i.putExtra("mensajeproductoinsertado", "Producto agregado exitosamente");
+                Intent i = new Intent(UpdateProductActivity.this, InicioActivity.class);
+                i.putExtra("mensajeproductoactualizado", "Producto actualizado exitosamente");
                 startActivity(i);
             }
         });
-
-
     }
 
     private boolean isFechaValida(String date) {

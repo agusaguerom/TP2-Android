@@ -50,21 +50,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductsViewHolder> {
                 Intent intent = new Intent(context, ProductDetailActivity.class);
 
                 intent.putExtra("id", producto.getId());
-                intent.putExtra("nombre", producto.getNombre());
-                intent.putExtra("precio", producto.getPrecio());
-                intent.putExtra("descripcion", producto.getDescripcion());
 
-                SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-YYYY");
-                String fechaPublicacionStr = sdf.format(producto.getFecha_publicacion());
-                String fechaLanzamientoStr = sdf.format(producto.getFecha_salida());
-
-                intent.putExtra("fecha_publicacion", fechaPublicacionStr);
-                intent.putExtra("fecha_salida", fechaLanzamientoStr);
-
-                intent.putExtra("stock", producto.getStock());
-                intent.putExtra("consola", producto.getConsola().getId());
-
-                intent.putExtra("imagen", producto.getUrl_imagen());
 
                 // Iniciar la actividad
                 context.startActivity(intent);

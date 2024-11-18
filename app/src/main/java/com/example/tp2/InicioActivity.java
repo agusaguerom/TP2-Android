@@ -14,11 +14,11 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.example.tp2.Fragments.ConsolaFragment;
 import com.example.tp2.Fragments.ProductsFragment;
 import com.example.tp2.Fragments.UsersFragment;
 import com.example.tp2.db.DatabaseHelper;
 import com.example.tp2.model.Consola;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
 
 public class InicioActivity extends AppCompatActivity {
@@ -38,11 +38,26 @@ public class InicioActivity extends AppCompatActivity {
 
         String insercioncorrecta = getIntent().getStringExtra("mensajeproductoinsertado");
         String productoeliminado = getIntent().getStringExtra("mensajeproductoeliminado");
+        String productoactualizado = getIntent().getStringExtra("mensajeproductoactualizado");
+        String usuarioinsertado = getIntent().getStringExtra("mensajeusuarioinsertado");
+        String usuarioActualizado = getIntent().getStringExtra("usuarioActualizado");
+        String consolaActualizada = getIntent().getStringExtra("consolaActualizada");
+        String consolaIngresada = getIntent().getStringExtra("consolaIngresada");
+
         if (insercioncorrecta != null){
             Toast.makeText(this, insercioncorrecta, Toast.LENGTH_SHORT).show();
         }else if(productoeliminado != null){
             Toast.makeText(this, productoeliminado, Toast.LENGTH_SHORT).show();
-
+        }else if(productoactualizado != null){
+            Toast.makeText(this, productoactualizado, Toast.LENGTH_SHORT).show();
+        } else if (usuarioinsertado != null) {
+            Toast.makeText(this, usuarioinsertado, Toast.LENGTH_SHORT).show();
+        }else if (usuarioActualizado != null) {
+            Toast.makeText(this, usuarioActualizado, Toast.LENGTH_SHORT).show();
+        }else if (consolaActualizada != null) {
+            Toast.makeText(this, consolaActualizada, Toast.LENGTH_SHORT).show();
+        }else if (consolaIngresada != null) {
+            Toast.makeText(this, consolaIngresada, Toast.LENGTH_SHORT).show();
         }
 
         if (savedInstanceState == null) {
@@ -73,6 +88,11 @@ public class InicioActivity extends AppCompatActivity {
                         fragmentSeleccionado = new UsersFragment();
                         Log.d("POSICIONES", "onTabSelected: SELECCIONO SEGUNDO TAB");
                         break;
+                    case 2:
+                        fragmentSeleccionado = new ConsolaFragment();
+                        Log.d("POSICIONES", "onTabSelected: SELECCIONO TERCER TAB");
+                        break;
+
                 }
                 if(fragmentSeleccionado != null){
                     FragmentManager fragmentManager = getSupportFragmentManager();

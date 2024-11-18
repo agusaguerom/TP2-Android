@@ -99,7 +99,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         valores.put("nombre", nombre);
         valores.put("precio", precio);
         valores.put("descripcion", descripcion);
-        valores.put("fecha_salida", fecha_salida.toString());
+        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+        String fechaSalidaStr = sdf.format(fecha_salida);
+        valores.put("fecha_salida", fechaSalidaStr);
         valores.put("url_imagen", img_url);
         valores.put("stock", stock);
         valores.put("fk_consola", consola.getId());
@@ -115,13 +117,17 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         Log.d("DELETE PRODUCT", "Producto eliminado");
     }
 
-    public void updateProduct(int idProducto, String nombre, int precio, String descripcion, String fecha_salida, int stock, Consola consola){
+    public void updateProduct(int idProducto, String nombre, int precio, String descripcion, Date fecha_salida, int stock,String url_imagen, Consola consola){
         SQLiteDatabase db = getWritableDatabase();
         ContentValues valores = new ContentValues();
+
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        String fechaSalidaStr = sdf.format(fecha_salida);
+
         valores.put("nombre", nombre);
         valores.put("precio", precio);
         valores.put("descripcion", descripcion);
-        valores.put("fecha_salida", fecha_salida);
+        valores.put("fecha_salida", fechaSalidaStr);
         valores.put("stock", stock);
         valores.put("fk_consola", consola.getId());
 
@@ -155,6 +161,17 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         return usuarioList;
     }
+    public Producto getProductById(int id){
+        LinkedList<Producto> productos = selectProducts();
+
+        for (Producto producto : productos){
+            if(producto.getId() == id){
+                return producto;
+            }
+        }
+        return null;
+    }
+
 
     public void insertUsuario(String nombre, String apellido, String email, String password){
         SQLiteDatabase db = getWritableDatabase();
@@ -187,7 +204,16 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.close();
         Log.d("UPDATE USUARIO", "updateUsuario: USUARIO ACTUALIZADO");
     }
+    public Usuario getUsuarioById(int id){
+        LinkedList<Usuario> usuarios = selectUsuarios();
 
+        for (Usuario usuario : usuarios){
+            if(usuario.getId() == id){
+                return usuario;
+            }
+        }
+        return null;
+    }
     //CRUD PARA LAS CONSOLAS
     public LinkedList<Consola> selectConsola(){
         SQLiteDatabase db = getReadableDatabase();
