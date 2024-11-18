@@ -49,19 +49,23 @@ public class MainActivity extends AppCompatActivity {
         buttonLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                for(Usuario usuario : usuarios){
-                    if (usuario.getEmail().equals(inputEmail.getText().toString()) && usuario.getPassword().equals(inputPassword.getText().toString())){
+                boolean encontrado = false;
+
+                for (Usuario usuario : usuarios) {
+                    if (usuario.getEmail().equals(inputEmail.getText().toString()) && usuario.getPassword().equals(inputPassword.getText().toString())) {
                         Intent i = new Intent(MainActivity.this, InicioActivity.class);
                         startActivity(i);
-                    }else{
-                       errorLogin.setVisibility(View.VISIBLE);
+                        encontrado = true;
+                        break;
                     }
                 }
 
+                if (!encontrado) {
+                    errorLogin.setVisibility(View.VISIBLE);
+                }
             }
+
+
         });
-
-
-
     }
 }
