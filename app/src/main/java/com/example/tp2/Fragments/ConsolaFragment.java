@@ -10,15 +10,13 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 
 import com.example.tp2.Adapters.ConsolasAdapter;
-import com.example.tp2.Adapters.UsersAdapter;
-import com.example.tp2.InsertConsolaActivity;
-import com.example.tp2.InsertProductActivity;
+import com.example.tp2.OperacionesCrud.InsertConsolaActivity;
 import com.example.tp2.R;
 import com.example.tp2.db.DatabaseHelper;
 import com.example.tp2.model.Consola;
-import com.example.tp2.model.Usuario;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.LinkedList;
@@ -33,6 +31,7 @@ public class ConsolaFragment extends Fragment {
     private DatabaseHelper db;
     private ConsolasAdapter adapter;
     FloatingActionButton btnAgregarConsola;
+    ProgressBar progressBar;
 
     public ConsolaFragment() {
     }
@@ -59,10 +58,11 @@ public class ConsolaFragment extends Fragment {
         LinkedList<Consola> listaConsola = db.selectConsola();
 
         View view =  inflater.inflate(R.layout.fragment_consola, container, false);
+        progressBar = view.findViewById(R.id.progressBar);
 
         recyclerView = view.findViewById(R.id.recyclerViewConsolas);
         recyclerView.setLayoutManager(new LinearLayoutManager(this.getContext()));
-        adapter = new ConsolasAdapter(this.getContext());
+        adapter = new ConsolasAdapter(this.getContext(), progressBar);
         adapter.setConsolaList(listaConsola);
         recyclerView.setAdapter(adapter);
 

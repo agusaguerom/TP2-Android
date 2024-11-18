@@ -11,7 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.tp2.InsertProductActivity;
+import com.example.tp2.OperacionesCrud.InsertProductActivity;
 import com.example.tp2.db.DatabaseHelper;
 import com.example.tp2.Adapters.ProductAdapter;
 import com.example.tp2.R;

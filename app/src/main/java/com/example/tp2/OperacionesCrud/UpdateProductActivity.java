@@ -1,13 +1,13 @@
-package com.example.tp2;
+package com.example.tp2.OperacionesCrud;
 
 import android.content.Intent;
-import android.graphics.DashPathEffect;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.Spinner;
 
 import androidx.activity.EdgeToEdge;
@@ -16,6 +16,9 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.example.tp2.InicioActivity;
+import com.example.tp2.MiAsyncTask;
+import com.example.tp2.R;
 import com.example.tp2.db.DatabaseHelper;
 import com.example.tp2.model.Consola;
 import com.example.tp2.model.Producto;
@@ -37,6 +40,7 @@ public class UpdateProductActivity extends AppCompatActivity {
         TextInputEditText inputDescripcionProduct;
         Button btnActualizarProducto;
         ImageView volver;
+        ProgressBar progressBar;
 
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
@@ -51,6 +55,7 @@ public class UpdateProductActivity extends AppCompatActivity {
         int id = getIntent().getIntExtra("id", 0);
         Producto producto = db.getProductById(id);
 
+        progressBar = findViewById(R.id.progressBar);
         inputNombreProduct = findViewById(R.id.inputNombreProduct);
         inputPrecioProduct = findViewById(R.id.inputPrecioProduct);
         inputFechaSalidaProduct = findViewById(R.id.inputFechaSalidaProduct);
@@ -113,7 +118,7 @@ public class UpdateProductActivity extends AppCompatActivity {
                 String imagen = "notimagefound";
                 Date finalFecha_salida = fecha_salida;
 
-                db.updateProduct(producto.getId(), nombre,precio,descripcion, finalFecha_salida,stock,imagen,consolaSeleccionada);
+                new MiAsyncTask(db, "update", "Producto", progressBar).execute(producto.getId(),nombre, precio, descripcion, finalFecha_salida, stock, imagen, consolaSeleccionada);
 
                 Intent i = new Intent(UpdateProductActivity.this, InicioActivity.class);
                 i.putExtra("mensajeproductoactualizado", "Producto actualizado exitosamente");

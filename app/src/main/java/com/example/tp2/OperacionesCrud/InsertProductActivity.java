@@ -1,4 +1,4 @@
-package com.example.tp2;
+package com.example.tp2.OperacionesCrud;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -7,6 +7,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.Spinner;
 
 import androidx.activity.EdgeToEdge;
@@ -15,6 +16,9 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.example.tp2.InicioActivity;
+import com.example.tp2.MiAsyncTask;
+import com.example.tp2.R;
 import com.example.tp2.db.DatabaseHelper;
 import com.example.tp2.model.Consola;
 import com.google.android.material.textfield.TextInputEditText;
@@ -31,6 +35,7 @@ public class InsertProductActivity extends AppCompatActivity {
     TextInputEditText inputDescripcionProduct;
     Button btnAgregarProducto;
     ImageView volver;
+    ProgressBar progressBar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,6 +57,8 @@ public class InsertProductActivity extends AppCompatActivity {
         inputDescripcionProduct = findViewById(R.id.InputDescripcionProduct);
         btnAgregarProducto = findViewById(R.id.btnAgregarProducto);
         volver = findViewById(R.id.volver);
+        progressBar = findViewById(R.id.progressBar);
+
 
         volver.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -102,7 +109,7 @@ public class InsertProductActivity extends AppCompatActivity {
                 String imagen = "notimagefound";
                 Date finalFecha_salida = fecha_salida;
 
-                db.insertProducts(nombre,precio,descripcion, finalFecha_salida,stock,imagen, consolaSeleccionada);
+                new MiAsyncTask(db, "insert", "Producto", progressBar).execute(nombre, precio, descripcion, finalFecha_salida, stock, imagen, consolaSeleccionada);
 
                 Intent i = new Intent(InsertProductActivity.this, InicioActivity.class);
                 i.putExtra("mensajeproductoinsertado", "Producto agregado exitosamente");

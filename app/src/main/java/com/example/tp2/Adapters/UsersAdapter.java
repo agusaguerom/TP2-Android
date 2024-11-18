@@ -1,19 +1,19 @@
 package com.example.tp2.Adapters;
 
-import static androidx.core.content.ContextCompat.startActivity;
-
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.tp2.MiAsyncTask;
 import com.example.tp2.R;
-import com.example.tp2.UpdateUsersActivity;
+import com.example.tp2.OperacionesCrud.UpdateUsersActivity;
 import com.example.tp2.db.DatabaseHelper;
 import com.example.tp2.model.Usuario;
 
@@ -22,9 +22,11 @@ import java.util.LinkedList;
 public class UsersAdapter extends RecyclerView.Adapter<UsersViewHolder> {
     private LinkedList<Usuario>  userList = new LinkedList<>();
     private Context context;
+    private ProgressBar progressBar;
 
-    public UsersAdapter(Context context){
+    public UsersAdapter(Context context, ProgressBar progressBar){
         this.context = context;
+        this.progressBar = progressBar;
     }
 
 
@@ -46,7 +48,7 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersViewHolder> {
         holder.btnEliminarUserView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                db.deleteUsuario(usuario.getId());
+                new MiAsyncTask(db, "delete", "Usuario", progressBar).execute(usuario);
                 userList.remove(position);
                 notifyItemRemoved(position);
                 Toast.makeText(context, "Usuario eliminado", Toast.LENGTH_SHORT).show();

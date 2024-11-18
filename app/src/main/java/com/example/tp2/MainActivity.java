@@ -54,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
                         Intent i = new Intent(MainActivity.this, InicioActivity.class);
                         startActivity(i);
                     }else{
-                        errorLogin.setVisibility(View.VISIBLE);
+                       errorLogin.setVisibility(View.VISIBLE);
                     }
                 }
 

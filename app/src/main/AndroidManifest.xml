@@ -13,25 +13,25 @@
         android:theme="@style/Theme.Tp2"
         tools:targetApi="31">
         <activity
-            android:name=".InsertConsolaActivity"
+            android:name=".OperacionesCrud.InsertConsolaActivity"
             android:exported="false" />
         <activity
-            android:name=".UpdateConsola"
+            android:name=".OperacionesCrud.UpdateConsola"
             android:exported="false" />
         <activity
-            android:name=".UpdateUsersActivity"
+            android:name=".OperacionesCrud.UpdateUsersActivity"
             android:exported="false" />
         <activity
-            android:name=".InsertUserActivity"
+            android:name=".OperacionesCrud.InsertUserActivity"
             android:exported="false" />
         <activity
-            android:name=".UpdateProductActivity"
+            android:name=".OperacionesCrud.UpdateProductActivity"
             android:exported="false" />
         <activity
             android:name=".ProductDetailActivity"
             android:exported="false" />
         <activity
-            android:name=".InsertProductActivity"
+            android:name=".OperacionesCrud.InsertProductActivity"
             android:exported="false" />
         <activity
             android:name=".InicioActivity"

@@ -10,11 +10,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
+import android.widget.ProgressBar;
 
 import com.example.tp2.Adapters.UsersAdapter;
-import com.example.tp2.InsertProductActivity;
-import com.example.tp2.InsertUserActivity;
+import com.example.tp2.OperacionesCrud.InsertUserActivity;
 import com.example.tp2.db.DatabaseHelper;
 import com.example.tp2.R;
 import com.example.tp2.model.Usuario;
@@ -32,6 +31,7 @@ public class UsersFragment extends Fragment {
     private DatabaseHelper db;
     private UsersAdapter adapter;
     FloatingActionButton btnAgregarUsuario;
+    ProgressBar progressBar;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -71,12 +71,13 @@ public class UsersFragment extends Fragment {
 
         View view =  inflater.inflate(R.layout.fragment_users, container, false);
 
+        progressBar = view.findViewById(R.id.progressBar);
+
         recyclerView = view.findViewById(R.id.recyclerViewUsers);
         recyclerView.setLayoutManager(new LinearLayoutManager(this.getContext()));
-        adapter = new UsersAdapter(this.getContext());
+        adapter = new UsersAdapter(this.getContext(), progressBar);
         adapter.setUserList(listaUsers);
         recyclerView.setAdapter(adapter);
-
 
 
         btnAgregarUsuario = view.findViewById(R.id.btnAgregarUsuario);

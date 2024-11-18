@@ -29,6 +29,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         db.execSQL("CREATE TABLE usuario (id INTEGER PRIMARY KEY AUTOINCREMENT, nombre TEXT,apellido TEXT, email TEXT, password TEXT);");
         db.execSQL("INSERT INTO usuario (nombre, apellido,email,password) VALUES ('Jose', 'Perez', 'josep@gmail.com', 'cont123')");
+        db.execSQL("INSERT INTO usuario (nombre, apellido,email,password) VALUES ('Administrador', 'admin', 'admin@admin', 'admin')");
+
 
         db.execSQL("CREATE TABLE consola(id INTEGER PRIMARY KEY AUTOINCREMENT, nombre TEXT)");
         db.execSQL("INSERT INTO consola (nombre) VALUES ('PS4')");

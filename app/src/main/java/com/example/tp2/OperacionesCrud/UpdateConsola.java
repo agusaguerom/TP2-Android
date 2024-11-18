@@ -1,4 +1,4 @@
-package com.example.tp2;
+package com.example.tp2.OperacionesCrud;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -14,53 +15,64 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.example.tp2.InicioActivity;
+import com.example.tp2.MiAsyncTask;
+import com.example.tp2.R;
 import com.example.tp2.db.DatabaseHelper;
+import com.example.tp2.model.Consola;
 
-public class InsertConsolaActivity extends AppCompatActivity {
-
+public class UpdateConsola extends AppCompatActivity {
+    ImageView volver;
+    EditText inputActualizarConsola;
+    Button actualizarConsola;
+    ProgressBar progressBar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        Button agregarConsola;
-        ImageView volver;
-        EditText nuevaconsola;
-
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_insert_consola);
+        setContentView(R.layout.activity_update_consola);
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+
+        int id = getIntent().getIntExtra("id", 0);
         DatabaseHelper db = new DatabaseHelper(this);
 
+        Consola consola = db.getConsolaById(id);
 
-        agregarConsola = findViewById(R.id.agregarConsola);
+        progressBar = findViewById(R.id.progressBar);
+        inputActualizarConsola = findViewById(R.id.inputActualizarConsola);
+        actualizarConsola = findViewById(R.id.actualizarConsola);
         volver = findViewById(R.id.volver);
-        nuevaconsola = findViewById(R.id.nuevaconsola);
+
+
+        inputActualizarConsola.setText(consola.getNombre());
 
         volver.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(InsertConsolaActivity.this, InicioActivity.class);
+                Intent i = new Intent(UpdateConsola.this, InicioActivity.class);
                 startActivity(i);
             }
         });
 
-        agregarConsola.setOnClickListener(new View.OnClickListener() {
+        actualizarConsola.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String nombre = nuevaconsola.getText().toString();
+                String nombre = inputActualizarConsola.getText().toString();
                 if (nombre.isEmpty()) {
-                    Toast.makeText(InsertConsolaActivity.this, "Ingrese un Nombre", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(UpdateConsola.this, "Ingrese un Nombre", Toast.LENGTH_SHORT).show();
                 }else{
-                    db.insertConsola(nombre);
-                    Intent i = new Intent(InsertConsolaActivity.this, InicioActivity.class);
-                    i.putExtra("consolaIngresada", "Usuario Actualizado exitosamente");
+                    new MiAsyncTask(db, "update", "Consola", progressBar).execute(consola.getId(), nombre);
+                    Intent i = new Intent(UpdateConsola.this, InicioActivity.class);
+                    i.putExtra("consolaActualizada", "Consola Actualizada exitosamente");
                     startActivity(i);
                 }
             }
         });
+
 
     }
 }
