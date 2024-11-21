@@ -71,7 +71,7 @@ public class ProductDetailActivity extends AppCompatActivity {
         int resID = getResources().getIdentifier(imagen, "drawable", getPackageName());
         productoImageView.setImageResource(resID);
         productonombre.setText(nombre);
-        productoprecio.setText(String.valueOf(precio));
+        productoprecio.setText("$" + String.valueOf(precio));
         productodescripcion.setText(descripcion);
 
         SimpleDateFormat formatousa = new SimpleDateFormat("yyyy-mm-dd");

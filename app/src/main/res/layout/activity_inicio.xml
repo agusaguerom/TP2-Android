@@ -11,12 +11,18 @@
         android:id="@+id/tablayout"
         android:layout_width="409dp"
         android:layout_height="wrap_content"
+        android:background="@color/negro"
+        app:tabIndicatorColor="@color/azul"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0">
+        app:layout_constraintVertical_bias="0.0"
+        app:tabSelectedTextColor="@color/blanco"
+        app:tabTextColor="@color/gris"
+        android:elevation="4dp"
+        >
 
         <com.google.android.material.tabs.TabItem
             android:layout_width="wrap_content"
@@ -40,6 +46,7 @@
         android:id="@+id/fragment_container"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:background="@color/negro"
         app:layout_constraintTop_toBottomOf="@id/tablayout"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

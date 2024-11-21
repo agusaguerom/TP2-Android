@@ -5,5 +5,9 @@
     <color name="blue">#013F9A</color>
     <color name="yellow">#DBFF5E</color>
     <color name="red">#B4920B0B</color>
-
+    <color name="negro">#1E1F29</color> <!-- Fondo principal -->
+    <color name="rojo">#FF4A4A</color> <!-- Texto de error -->
+    <color name="azul">#007BFF</color> <!-- Botones y links -->
+    <color name="blanco">#FFFFFF</color> <!-- Texto principal -->
+    <color name="gris">#F2F2F2</color>
 </resources>

@@ -21,7 +21,7 @@ import com.example.tp2.model.Usuario;
 import java.util.LinkedList;
 
 public class MainActivity extends AppCompatActivity {
-    Button buttonLogin;
+    Button buttonLogin, btnRegistro;
     EditText inputEmail, inputPassword;
     TextView errorLogin;
 
@@ -39,6 +39,8 @@ public class MainActivity extends AppCompatActivity {
         inputPassword = findViewById(R.id.inputPassword);
         buttonLogin = findViewById(R.id.login);
         errorLogin = findViewById(R.id.errorInputs);
+        btnRegistro = findViewById(R.id.btnRegistro);
+
 
 
         DatabaseHelper db = new DatabaseHelper(this);
@@ -64,8 +66,13 @@ public class MainActivity extends AppCompatActivity {
                     errorLogin.setVisibility(View.VISIBLE);
                 }
             }
-
-
+        });
+        btnRegistro.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(MainActivity.this, AvisoRegistro.class);
+                startActivity(i);
+            }
         });
     }
 }

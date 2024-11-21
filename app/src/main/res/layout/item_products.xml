@@ -4,7 +4,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:background="@color/negro">
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cardView"
@@ -13,6 +14,7 @@
         android:layout_margin="8dp"
         app:cardCornerRadius="8dp"
         app:cardElevation="4dp"
+        app:cardBackgroundColor="@color/gris"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
@@ -29,6 +31,7 @@
                 android:layout_height="80dp"
                 android:layout_marginEnd="8dp"
                 android:scaleType="centerCrop"
+                android:background="@color/gris"
                 tools:srcCompat="@tools:sample/avatars" />
 
             <LinearLayout
@@ -43,8 +46,8 @@
                     android:layout_height="wrap_content"
                     android:gravity="start"
                     android:text="Nombre del Producto"
-                    android:textColor="@android:color/black"
-                    android:textSize="16sp" />
+                    android:textColor="@color/negro"
+                android:textSize="16sp" />
 
                 <TextView
                     android:id="@+id/precioproducto"
@@ -52,11 +55,11 @@
                     android:layout_height="wrap_content"
                     android:gravity="start"
                     android:text="Precio"
-                    android:textColor="@android:color/black"
+                    android:textColor="@color/azul"
                     android:textSize="14sp" />
             </LinearLayout>
 
-            </LinearLayout>
+        </LinearLayout>
 
     </androidx.cardview.widget.CardView>
 

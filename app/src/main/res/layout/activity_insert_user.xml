@@ -5,7 +5,8 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".OperacionesCrud.InsertUserActivity">
+    tools:context=".OperacionesCrud.InsertUserActivity"
+    android:background="@color/negro">
 
     <EditText
         android:id="@+id/inputmail"
@@ -14,6 +15,9 @@
         android:ems="10"
         android:hint="ejemplo@gmail.com"
         android:inputType="text"
+        android:background="@drawable/inputs"
+        android:textColor="@color/blanco"
+        android:paddingStart="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.496"
@@ -28,6 +32,10 @@
         android:ems="10"
         android:hint="Perez"
         android:inputType="text"
+        android:textColor="@color/blanco"
+        android:background="@drawable/inputs"
+        android:paddingStart="16dp"
+
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.496"
@@ -41,6 +49,10 @@
         android:layout_height="65dp"
         android:ems="10"
         android:hint="Jose"
+        android:textColor="@color/blanco"
+        android:background="@drawable/inputs"
+        android:paddingStart="16dp"
+
         android:inputType="text"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -55,6 +67,10 @@
         android:layout_height="65dp"
         android:ems="10"
         android:hint="contrasen123"
+        android:paddingStart="16dp"
+
+        android:textColor="@color/blanco"
+        android:background="@drawable/inputs"
         android:inputType="text"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -68,6 +84,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Nombre"
+        android:textColor="@color/blanco"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.249"
@@ -77,9 +94,12 @@
 
     <TextView
         android:id="@+id/textView2"
+        android:textColor="@color/blanco"
+
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Apellido"
+
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.25"
@@ -89,6 +109,8 @@
 
     <TextView
         android:id="@+id/textView9"
+        android:textColor="@color/blanco"
+
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Correo Electronico"
@@ -101,6 +123,8 @@
 
     <TextView
         android:id="@+id/textView10"
+        android:textColor="@color/blanco"
+
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Contraseña"
@@ -116,6 +140,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Registrar Usuario"
+        android:backgroundTint="@color/azul"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -128,6 +153,8 @@
         android:layout_height="41dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:tint="@android:color/white"
+
         app:layout_constraintHorizontal_bias="0.011"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"

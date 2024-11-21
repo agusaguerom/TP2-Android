@@ -1,0 +1,87 @@
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/negro"
+    android:padding="24dp"
+    android:id="@+id/avisoregistro">
+
+    <!-- Icono o Imagen -->
+
+    <!-- Título -->
+
+    <!-- Mensaje Informativo -->
+    <TextView
+        android:id="@+id/aviso_titulo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Recuerda"
+        android:textColor="@color/blanco"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.492"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/warning_icon"
+        app:layout_constraintVertical_bias="0.1" />
+
+    <TextView
+        android:id="@+id/aviso_mensaje"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:gravity="center"
+        android:padding="8dp"
+        android:text="Este sistema es de uso exclusivo interno. Si necesitas acceso, por favor solicita a un empleado autorizado que cree una cuenta para ti."
+        android:textColor="@color/gris"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/aviso_titulo" />
+
+    <!-- Botón para volver -->
+
+    <TextView
+        android:id="@+id/aviso_mensaje2"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:padding="8dp"
+        android:text="Para más información, comunícate con el administrador del sistema"
+        android:textColor="@color/gris"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toTopOf="@+id/btn_volver"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/aviso_mensaje"
+        app:layout_constraintVertical_bias="0.164" />
+
+    <Button
+        android:id="@+id/btn_volver"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Volver"
+        android:textSize="16sp"
+        android:backgroundTint="@color/azul"
+        android:textColor="@color/blanco"
+        android:padding="12dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginBottom="32dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <ImageView
+        android:id="@+id/warning_icon"
+        android:layout_width="96dp"
+        android:layout_height="96dp"
+        android:layout_marginTop="48dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@android:drawable/stat_sys_warning" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
